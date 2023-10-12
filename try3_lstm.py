@@ -110,25 +110,22 @@ print(f'Mean Squared Error: {mse:.4f}')
 print("Predicted Pressure Values:")
 print(predictions)
 
-# Ensure pressure_series.iloc[-1] is a scalar value (use .values[0])
+# Ensure pressure_series.iloc[-1] is a scalar value
 pressure_scalar = pressure_series.iloc[-1]
-
-# Convert predictions to a NumPy array
-predictions_array = np.array(predictions)
 
 # Create a NumPy array for the x-axis
 x = np.array(pd.date_range(start=pressure_series.index[-1], periods=len(predictions) + 1))
-# Create a NumPy array for the y-axis
-y = np.array([pressure_scalar] + list(predictions_array))
 
+# Create a NumPy array for the y-axis
+y = np.concatenate(([pressure_scalar], predictions.reshape(-1)))
 
 # Plot the actual data and forecast
 plt.figure(figsize=(12, 6))
 plt.plot(pressure_series, label='Actual Data', linestyle='-')
-#plt.plot(pd.date_range(start=pressure_series.index[-1], periods=len(predictions)+1), [pressure_series.iloc[-1]] + list(predictions), label='Forecast', linestyle='--')
 plt.plot(x, y, label='Forecast', linestyle='--')
 plt.title('Hydraulic Pressure Forecast')
 plt.xlabel('Timestamp')
 plt.ylabel('Pressure (PSI)')
 plt.legend()
 plt.show()
+

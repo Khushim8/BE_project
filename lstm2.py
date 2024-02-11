@@ -3,7 +3,7 @@ import numpy as np
 from sklearn.model_selection import train_test_split
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import LSTM, Dense
-from sklearn.metrics import classification_report, confusion_matrix
+from sklearn.metrics import classification_report, confusion_matrix, precision_score, recall_score, f1_score
 
 class HydraulicClampingSimulator:
     def __init__(self):
@@ -104,6 +104,14 @@ class HydraulicClampingSimulator:
         print(classification_report(y_test_states, y_pred_states))
         print("Confusion Matrix:")
         print(confusion_matrix(y_test_states, y_pred_states))
+        
+        precision = precision_score(y_test_states, y_pred_states, average='weighted')
+        recall = recall_score(y_test_states, y_pred_states, average='weighted')
+        f1 = f1_score(y_test_states, y_pred_states, average='weighted')
+
+        print(f"Precision: {precision}")
+        print(f"Recall: {recall}")
+        print(f"F1 Score: {f1}")
 
         self.lstm_model = lstm_model
 

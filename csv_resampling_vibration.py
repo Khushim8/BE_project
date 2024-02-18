@@ -19,8 +19,8 @@ def average_values(input_csv_path, output_csv_path, sampling_rate):
     # Create a datetime index with appropriate frequency based on sampling rate
     df.index = pd.date_range(start='2024-02-15', periods=len(df), freq=f'{1/sampling_rate}S')
 
-    # Resample the data to one-minute intervals and calculate the mean
-    df_resampled = df.resample('1T').mean()
+    # Resample the data to one-second intervals and calculate the mean
+    df_resampled = df.resample('1S').mean()
 
     # Reset the index to remove date and time information
     df_resampled.reset_index(drop=True, inplace=True)
